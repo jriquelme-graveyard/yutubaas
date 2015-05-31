@@ -42,6 +42,7 @@ func (s *HttpServer) CreateRouter() *mux.Router {
 	// service status
 	router.Handle("/status", commonHandlers.ThenFunc(s.HandleStatus)).Methods("GET")
 	router.Handle("/login", commonHandlers.ThenFunc(s.HandleLogin)).Methods("POST")
+	router.Handle("/download/mailgun", commonHandlers.ThenFunc(s.HandleDownloadMailgun)).Methods("POST")
 	router.Handle("/download", commonHandlers.Append(s.AuthenticationHandler).ThenFunc(s.HandleDownload)).Methods("POST")
 
 	return router
@@ -134,4 +135,9 @@ func (s *HttpServer) HandleDownload(w http.ResponseWriter, r *http.Request) {
 	videoDwn.Email = account.Email
 	videoDwn.Error = nil
 	go s.Downloader.DownloadVideo(videoDwn)
+}
+
+func (s *HttpServer) HandleDownloadMailgun(w http.ResponseWriter, r *http.Request) {
+	log.Debug("Download from Mailgun!")
+	w.WriteHeader(http.StatusOK)
 }
