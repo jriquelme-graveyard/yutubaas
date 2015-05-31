@@ -33,7 +33,7 @@ saludos`)
 	mg.ErrorTemplate, err = template.New("error").Parse(`
 Hola {{.Name}}:
 
-Hubo un error al descargar el video "{{.Title}}": {{.Error}}
+Hubo un error al descargar el video "{{.SrcUrl}}": {{.Error}}
 
 saludos`)
 	if err != nil {
@@ -47,7 +47,7 @@ func (mailer *MailgunMailer) Notify(video *DownloadVideo) {
 	txt := bytes.NewBufferString("")
 
 	if video.Error != nil {
-		subject = fmt.Sprintf("%s, hubo un error en la descarga de %s :(", video.Name, video.Title)
+		subject = fmt.Sprintf("%s, hubo un error en la descarga de %s :(", video.SrcUrl, video.Title)
 		mailer.ErrorTemplate.Execute(txt, video)
 	} else {
 		subject = fmt.Sprintf("%s, tu video %s está listo", video.Name, video.Title)
