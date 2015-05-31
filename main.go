@@ -65,6 +65,7 @@ type ConfigUser struct {
 	Name     string "name"
 	Password string "password"
 	Email    string "email"
+	Username string "username,omitempty" // always empty in config (field to store the username, key of the map entry)
 }
 
 type MailgunConfig struct {
@@ -86,5 +87,12 @@ func LoadConfig(path string) (*Config, error) {
 	}
 	config := &Config{}
 	yamlErr := yaml.Unmarshal(b, config)
-	return config, yamlErr
+	if yamlErr != nil {
+		return nil, err
+	}
+	// fill usernames
+	for username, account := range config.Accounts {
+		account.Username = username
+	}
+	return config, nil
 }

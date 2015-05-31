@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/gorilla/context"
 	"github.com/gorilla/mux"
+	"github.com/gorilla/schema"
 	"github.com/justinas/alice"
 	"gopkg.in/dgrijalva/jwt-go.v2"
 	"net/http"
@@ -137,7 +138,74 @@ func (s *HttpServer) HandleDownload(w http.ResponseWriter, r *http.Request) {
 	go s.Downloader.DownloadVideo(videoDwn)
 }
 
+type MailgunMessage struct {
+	Sender       string `schema:"sender"`
+	Timestamp    string `schema:"timestamp"`
+	Token        string `schema:"token"`
+	Signature    string `schema:"signature"`
+	StrippedText string `schema:"stripped-text"`
+}
+
 func (s *HttpServer) HandleDownloadMailgun(w http.ResponseWriter, r *http.Request) {
 	log.Debug("Download from Mailgun!")
+	err := r.ParseForm()
+	if err != nil {
+		log.Error("error parsing form from Mailgun! %s", err)
+		w.WriteHeader(http.StatusOK) // sending 200 anyway
+		return
+	}
+
+	// decode params
+	mgmsg := &MailgunMessage{}
+	decoder := schema.NewDecoder()
+	decoder.IgnoreUnknownKeys(true)
+	err = decoder.Decode(mgmsg, r.PostForm)
+	if err != nil {
+		log.Error("error decoding parameter from Mailgun! %s", err)
+		w.WriteHeader(http.StatusOK) // sending 200 anyway
+		return
+	}
+	log.Debug("parameters: %+v", mgmsg)
+
+	// TODO: check signature
+
+	// get account
+	account := s.GetAccountFromEmail(mgmsg.Sender)
+	if account == nil {
+		log.Error("unknown sender from Mailgun: %s", mgmsg.Sender)
+		w.WriteHeader(http.StatusOK) // sending 200 anyway
+		return
+	}
+
+	// TODO: have to move this to send the error message to the user
+	log.Debug("parsing %s", mgmsg.StrippedText)
+	videoUrl, err := url.ParseRequestURI(mgmsg.StrippedText)
+	if err != nil {
+		log.Error("wrong url(%s) in Mailgun message: %s", mgmsg.StrippedText, err)
+		w.WriteHeader(http.StatusOK) // sending 200 anyway
+		return
+	}
+
+	// everything is ok, download!
 	w.WriteHeader(http.StatusOK)
+
+	// download
+	videoDwn := &DownloadVideo{}
+	videoDwn.SrcUrl = videoUrl
+	videoDwn.DstUrl = nil // downloader set this
+	videoDwn.Title = ""   // downloader set this
+	videoDwn.Name = account.Name
+	videoDwn.Username = account.Username
+	videoDwn.Email = account.Email
+	videoDwn.Error = nil
+	go s.Downloader.DownloadVideo(videoDwn)
+}
+
+func (s *HttpServer) GetAccountFromEmail(email string) *ConfigUser {
+	for _, account := range s.Accounts {
+		if account.Email == email {
+			return &account
+		}
+	}
+	return nil
 }
