@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/op/go-logging"
 	"gopkg.in/alecthomas/kingpin.v1"
 	"gopkg.in/yaml.v2"
@@ -14,6 +15,7 @@ var (
 	log        = logging.MustGetLogger("yutubaas")
 	verbose    = kingpin.Flag("verbose", "verbose output").Default("false").Bool()
 	configfile = kingpin.Flag("config", "config file").Required().String()
+	httpPort   = kingpin.Flag("port", "http port").Default("8080").Int()
 )
 
 const (
@@ -43,9 +45,10 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error creating http server: %s", err)
 	}
-	log.Debug("http server listening to 0.0.0.0:8080")
+	addr := fmt.Sprintf(":%d", *httpPort)
+	log.Debug("http server listening to %s", addr)
 	http.Handle("/", server.CreateRouter())
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(addr, nil)
 }
 
 // configuration
