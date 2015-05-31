@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/context"
@@ -11,6 +12,7 @@ import (
 	"net/http"
 	"net/http/httputil"
 	"net/url"
+	"strings"
 	"time"
 )
 
@@ -179,7 +181,13 @@ func (s *HttpServer) HandleDownloadMailgun(w http.ResponseWriter, r *http.Reques
 
 	// TODO: have to move this to send the error message to the user
 	log.Debug("parsing %s", mgmsg.StrippedText)
-	videoUrl, err := url.ParseRequestURI(mgmsg.StrippedText)
+	scanner := bufio.NewScanner(strings.NewReader(mgmsg.StrippedText))
+	if !scanner.Scan() {
+		log.Error("error extracting url from Mailgun message: %s", mgmsg.StrippedText)
+		w.WriteHeader(http.StatusOK) // sending 200 anyway
+		return
+	}
+	videoUrl, err := url.ParseRequestURI(scanner.Text())
 	if err != nil {
 		log.Error("wrong url(%s) in Mailgun message: %s", mgmsg.StrippedText, err)
 		w.WriteHeader(http.StatusOK) // sending 200 anyway
