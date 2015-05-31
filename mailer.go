@@ -24,7 +24,7 @@ func NewMailgunMailer(key string) (*MailgunMailer, error) {
 	mg.SuccessTemplate, err = template.New("success").Parse(`
 Hola {{.Name}}:
 
-Tu video "{{.Title}}"" está listo, puedes descargarlo desde {{.DstUrl}}. Recuerda que tienes que 30 minutos para realizar la descarga!
+Tu video "{{.Title}}"" está listo, puedes descargarlo desde {{.DstUrl}}.
 
 saludos`)
 	if err != nil {
