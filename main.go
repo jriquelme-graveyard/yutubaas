@@ -50,16 +50,21 @@ func main() {
 
 // configuration
 type Config struct {
-	HS256key   string                "hs256key"
-	Accounts   map[string]ConfigUser "accounts"
-	MailgunKey string                "mailgunkey"
-	S3Config   S3Config              "s3"
+	HS256key      string                "hs256key"
+	Accounts      map[string]ConfigUser "accounts"
+	MailgunConfig MailgunConfig         "mailgun"
+	S3Config      S3Config              "s3"
 }
 
 type ConfigUser struct {
 	Name     string "name"
 	Password string "password"
 	Email    string "email"
+}
+
+type MailgunConfig struct {
+	Key    string "key"
+	Domain string "domain"
 }
 
 type S3Config struct {

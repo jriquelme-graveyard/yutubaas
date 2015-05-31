@@ -9,7 +9,9 @@ accounts:
     name: Charles
     password: 12lRJK60L4
     email: charles@gmail.com
-mailgunkey: key-nmpo7ubk2a0bjhoywmltt2bhj77wo634
+mailgun:
+  key: key-nmpo7ubk2a0bjhoywmltt2bhj77wo634
+  domain: mg.mydomain.com
 s3:
   accessKey: 26U6N5LWHT7UDMASZYMF
   secretKey: VZF3qR3HF81HcnaIEsN8//rHpGpG4PQF/6R6DR0z

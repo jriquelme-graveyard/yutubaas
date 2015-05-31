@@ -17,9 +17,9 @@ type MailgunMailer struct {
 	ErrorTemplate   *template.Template
 }
 
-func NewMailgunMailer(key string) (*MailgunMailer, error) {
+func NewMailgunMailer(key string, domain string) (*MailgunMailer, error) {
 	mg := &MailgunMailer{}
-	mg.Mailgun = mailgun.NewMailgun("mg.larix.io", key, "")
+	mg.Mailgun = mailgun.NewMailgun(domain, key, "")
 	var err error
 	mg.SuccessTemplate, err = template.New("success").Parse(`
 Hola {{.Name}}:

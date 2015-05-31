@@ -26,7 +26,7 @@ func NewHttpServer(config *Config) (*HttpServer, error) {
 	server.Accounts = config.Accounts
 	repoConfig := &S3VideoRepoConfig{config.S3Config.AccessKey, config.S3Config.SecretKey, config.S3Config.Bucket}
 	videoRepo := NewS3VideoRepository(repoConfig)
-	mailer, err := NewMailgunMailer(config.MailgunKey) // FIXME: move to config
+	mailer, err := NewMailgunMailer(config.MailgunConfig.Key, config.MailgunConfig.Domain)
 	if err != nil {
 		return nil, err
 	}

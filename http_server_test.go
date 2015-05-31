@@ -44,7 +44,6 @@ func (s *ApiRestSuite) SetupSuite() {
 	config := &Config{}
 	config.HS256key = "eCTEHBp97YKY4Bf89UKrV4az8FFe34fTYu4eLX8aryj6TUpycRkMJkHYRjbykCh"
 	config.Accounts = map[string]ConfigUser{"jriquelme": ConfigUser{"Jorge", "asdf", "jorge@larix.cl"}}
-	config.MailgunKey = ""
 
 	s.HS256key = []byte(config.HS256key)
 
