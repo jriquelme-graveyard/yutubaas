@@ -1,0 +1,16 @@
+---
+hs256key: fw1voOxqHqZMwHcPJuG6tfb6pLq4yH4PABflPa5xaWJk2e357kRJqQlkucYEjIw6wm45Ts8zoq86xVEsoIpZCrPfjl2U6opop7Utba2Y6HqiziWkS4uVssc26m15gopamRNZvMeqi9zp5RfGtwSBSnIxCTut0WjcJdZot0f6Z1a8P6swCY8LPAMObpFMkonJQdICUw3nj55idLodrivSe3Ddk8z4qodKIbcMpHUF8XjN0t42EfCrNeK7KoKZruWJ
+accounts:
+  kokoschka:
+    name: Oskar
+    password: CIPqhwxm2L
+    email: oskar@gmail.com
+  baudelaire:
+    name: Charles
+    password: 12lRJK60L4
+    email: charles@gmail.com
+mailgunkey: key-nmpo7ubk2a0bjhoywmltt2bhj77wo634
+s3:
+  accessKey: 26U6N5LWHT7UDMASZYMF
+  secretKey: VZF3qR3HF81HcnaIEsN8//rHpGpG4PQF/6R6DR0z
+  bucket: yutubaas
