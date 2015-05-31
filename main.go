@@ -68,6 +68,7 @@ type ConfigUser struct {
 }
 
 type MailgunConfig struct {
+	From   string "from"
 	Key    string "key"
 	Domain string "domain"
 }

@@ -10,6 +10,7 @@ accounts:
     password: 12lRJK60L4
     email: charles@gmail.com
 mailgun:
+  from: yutubaas@mg.mydomain.com
   key: key-nmpo7ubk2a0bjhoywmltt2bhj77wo634
   domain: mg.mydomain.com
 s3:

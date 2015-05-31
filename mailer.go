@@ -13,12 +13,14 @@ type Mailer interface {
 
 type MailgunMailer struct {
 	Mailgun         mailgun.Mailgun
+	From            string
 	SuccessTemplate *template.Template
 	ErrorTemplate   *template.Template
 }
 
-func NewMailgunMailer(key string, domain string) (*MailgunMailer, error) {
+func NewMailgunMailer(from string, key string, domain string) (*MailgunMailer, error) {
 	mg := &MailgunMailer{}
+	mg.From = from
 	mg.Mailgun = mailgun.NewMailgun(domain, key, "")
 	var err error
 	mg.SuccessTemplate, err = template.New("success").Parse(`
@@ -54,7 +56,7 @@ func (mailer *MailgunMailer) Notify(video *DownloadVideo) {
 		mailer.SuccessTemplate.Execute(txt, video)
 	}
 
-	msg := mailer.Mailgun.NewMessage("yutubaas@larix.io", subject, txt.String(), video.Email)
+	msg := mailer.Mailgun.NewMessage(mailer.From, subject, txt.String(), video.Email)
 
 	if mes, id, err := mailer.Mailgun.Send(msg); err != nil {
 		log.Error("error sending email to mailgun: %s", err)
