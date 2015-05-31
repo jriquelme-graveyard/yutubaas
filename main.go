@@ -48,7 +48,9 @@ func main() {
 	addr := fmt.Sprintf(":%d", *httpPort)
 	log.Debug("http server listening to %s", addr)
 	http.Handle("/", server.CreateRouter())
-	http.ListenAndServe(addr, nil)
+	if err := http.ListenAndServe(addr, nil); err != nil {
+		log.Fatalf("Error starting http server: %s", err)
+	}
 }
 
 // configuration
