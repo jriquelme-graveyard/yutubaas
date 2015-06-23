@@ -14,5 +14,6 @@ yutubaas.yml
 
 # coverage files
 cover.out
+cover.out.bak
 coverage.html
 
