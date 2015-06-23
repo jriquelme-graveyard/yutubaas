@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/op/go-logging"
-	"gopkg.in/alecthomas/kingpin.v1"
-	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"net/http"
 	"os"
+
+	"github.com/op/go-logging"
+	"gopkg.in/alecthomas/kingpin.v1"
+	"gopkg.in/yaml.v2"
 )
 
 // comand line flags

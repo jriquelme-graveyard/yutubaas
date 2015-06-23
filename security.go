@@ -2,9 +2,10 @@ package main
 
 import (
 	"encoding/json"
-	"gopkg.in/dgrijalva/jwt-go.v2"
 	"net/http"
 	"time"
+
+	"gopkg.in/dgrijalva/jwt-go.v2"
 )
 
 type Credentials struct {

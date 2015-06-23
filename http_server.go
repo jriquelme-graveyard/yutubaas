@@ -4,16 +4,17 @@ import (
 	"bufio"
 	"encoding/json"
 	"fmt"
-	"github.com/gorilla/context"
-	"github.com/gorilla/mux"
-	"github.com/gorilla/schema"
-	"github.com/justinas/alice"
-	"gopkg.in/dgrijalva/jwt-go.v2"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
 	"strings"
 	"time"
+
+	"github.com/gorilla/context"
+	"github.com/gorilla/mux"
+	"github.com/gorilla/schema"
+	"github.com/justinas/alice"
+	"gopkg.in/dgrijalva/jwt-go.v2"
 )
 
 type HttpServer struct {

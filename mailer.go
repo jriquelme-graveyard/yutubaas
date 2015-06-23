@@ -3,8 +3,9 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"github.com/mailgun/mailgun-go"
 	"html/template"
+
+	"github.com/mailgun/mailgun-go"
 )
 
 type Mailer interface {
