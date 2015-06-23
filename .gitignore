@@ -1,5 +1,18 @@
+# binary
 yutubaas
+
+# glide
 _vendor/
+
+# sublime files
 yutubaas.sublime-project
 yutubaas.sublime-workspace
+
+# idea files
+.idea/
 yutubaas.yml
+
+# coverage files
+cover.out
+coverage.html
+
